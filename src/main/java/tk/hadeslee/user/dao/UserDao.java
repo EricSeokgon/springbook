@@ -13,7 +13,7 @@ import java.sql.*;
  * Note:
  * To change this template use File | Settings | File Templates.
  */
-public class UserDao {
+public abstract class UserDao {
     public void add(User user) throws ClassNotFoundException, SQLException {
         Connection c = getConnection();
         PreparedStatement ps = c.prepareStatement("insert into users (id,name,password) VALUE (?,?,?)");
@@ -49,8 +49,6 @@ public class UserDao {
         return user;
     }
 
-    private Connection getConnection() throws ClassNotFoundException, SQLException {
-        Class.forName("com.mysql.jdbc.Driver");
-        return DriverManager.getConnection("jdbc:mysql://localhost/springbook", "springbook", "springbook");
-    }
+    public abstract Connection getConnection() throws ClassNotFoundException, SQLException;
+
 }
