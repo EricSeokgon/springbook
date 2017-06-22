@@ -13,9 +13,13 @@ import java.sql.*;
  * Note:
  * To change this template use File | Settings | File Templates.
  */
-public abstract class UserDao {
+public class UserDao {
+
+
+    private final ConnectionMaker connectionMaker;
+
     public void add(User user) throws ClassNotFoundException, SQLException {
-        Connection c = getConnection();
+        Connection c = connectionMaker.makeConnection();
         PreparedStatement ps = c.prepareStatement("insert into users (id,name,password) VALUE (?,?,?)");
         ps.setString(1, user.getId());
         ps.setString(2, user.getName());
@@ -29,7 +33,7 @@ public abstract class UserDao {
 
 
     public User get(String id) throws ClassNotFoundException, SQLException {
-        Connection c = getConnection();
+        Connection c = connectionMaker.makeConnection();
         PreparedStatement ps = c.prepareStatement("SELECT * FROM users WHERE id=?");
 
         ps.setString(1, id);
@@ -49,6 +53,9 @@ public abstract class UserDao {
         return user;
     }
 
-    public abstract Connection getConnection() throws ClassNotFoundException, SQLException;
+    //public abstract Connection getConnection() throws ClassNotFoundException, SQLException;
 
+    public UserDao(ConnectionMaker connectionMaker) {
+        this.connectionMaker = connectionMaker;
+    }
 }

@@ -16,7 +16,8 @@ import static org.junit.Assert.assertThat;
  * To change this template use File | Settings | File Templates.
  */
 public class UserDaoTest {
-    static UserDao dao = new UserDao();
+    static ConnectionMaker connectionMaker = new DConnectionMaker();
+    static UserDao dao = new UserDao(connectionMaker);
     static User user = new User();
 
     @Test
